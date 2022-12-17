@@ -1,0 +1,87 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Fira+Code:wght@500&display=swap');
+
+:root {
+
+	background-color: #EABDA8;
+ 	color: #493843;
+
+	font-family: 'Comfortaa', cursive;
+	text-align: center;
+}
+
+html {
+	width: 100vw;
+	height: 100vh;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+
+	margin: 0;
+	padding: 0;
+
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+body > * {
+	flex: 1 1 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+body > canvas {
+	flex: 1 1 60%;
+	aspect-ratio: 4 / 3;
+	max-width: calc(100vw - 5rem);
+
+	border: solid 5px #61988E;
+	border-radius: 15px;
+	background-color: #A0B2A6;
+}
+body > footer {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.wrap {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+.keys {
+	display: grid;
+	grid-template: 1fr 1fr / 1fr 1fr 1fr; 
+}
+.keys::before {
+	content: ' ';
+	grid-area: 1 / 1 / span 1 / span 1;
+}
+.keys::after {
+	content: ' ';
+	grid-area: 1 / 3 / span 1 / span 1;
+}
+
+.keys > * {
+	margin: 1em;
+	padding: 1em;
+	aspect-ratio: 1 / 1;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: solid 1px #493843 ; 
+	border-radius: 0.5em;
+  line-height: 1;
+	font-family: 'arial', monospace;
+}
