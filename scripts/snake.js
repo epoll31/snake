@@ -3,8 +3,7 @@ window.onload = (_) => {
 	gfx.canvas = document.getElementById('canvas');
 	gfx.ctx = gfx.canvas.getContext("2d");
 
-	reset();
-	requestAnimationFrame(draw);
+	pullScores();
 }
 const gfx = {
 	drawSnake: (x, y) => {
@@ -26,7 +25,6 @@ let add = 0;
 const speed = 300;
 let gameLoop = undefined;
 let direction = 'right';
-
 
 const update = () => {
 	const wrap = [];
@@ -147,7 +145,7 @@ window.onkeydown = (event) => {
 			}
 		}; break;
 		case ' ': {
-			add++;
+			//add++;
 		}; break;
 	}
 	if (force) {
@@ -160,6 +158,7 @@ const reset = () => {
 		clearInterval(gameLoop);
 	}
 	gameLoop = setInterval(update, speed);
+	pullScores();
 
 	snakes = [ {
 		x: 20,
@@ -168,6 +167,12 @@ const reset = () => {
 	}];
 	food = [];
 	foodCount = 1;
+
+	const el = document.getElementById('game');
+	el.classList.remove('paused');
+
+	requestAnimationFrame(draw);
+	isGameOver = false;
 };
 
 const forceUpdate = () => {
@@ -179,9 +184,47 @@ let isGameOver = false;
 
 const gameOver = () => {
 	isGameOver = true;
-	const score = snakes.length * 5;
-	
-	gfx.canvas.classList.add('gameOver');	
+
+	pushScore();	
+	const el = document.getElementById('game');
+	el.classList.add('paused');	
 		
 	clearInterval(gameLoop);
 }
+
+let scores = [];
+
+const pushScore = () => {
+	const score = snakes.length * 5;
+	scores.push(score);
+	localStorage.setItem('scores', JSON.stringify(scores));
+}
+const pullScores = () => {
+
+	let saved = JSON.parse(localStorage.getItem('scores'));
+	if (!saved) {
+		saved = [ ];
+	}
+
+	scores = saved;
+	renderHighScores();
+}
+
+const renderHighScores = () => {
+	const scoresEl = document.getElementById('scores');
+	while (scoresEl.firstChild) {
+		scoresEl.removeChild(scoresEl.firstChild);
+	}
+	scores.sort((a, b) => a < b).filter((_, i) => i < 5).forEach(s => {
+		const el = document.createElement('p');
+		el.innerText = s;
+		scoresEl.appendChild(el);
+	});
+	if (!scores.length) {
+		const el = document.createElement('p');
+		el.innerText = 'no high score yet';
+		scoresEl.appendChild(el);
+
+	}
+}
+

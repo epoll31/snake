@@ -8,11 +8,19 @@
 	<body>
 		<h1>snake</h1>
 
-		<canvas id='canvas' width="400" height="300" ></canvas>
+		<div id='game' class='game paused'>
+			<canvas id='canvas' width="400" height="300" ></canvas>
+			<div>		
+				<button onclick="reset()">play</button>
+			</div>
+		</div>
 		
+
 		<footer>
+			<h2>high scores</h2>
 			<h2>controls</h2>
-			<div class="wrap">
+			<div id="scores" class="scores"></div>
+			<div class="controls">
 				<div class="keys">
 					<p>W</p>
 					<p>A</p>
